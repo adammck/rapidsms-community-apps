@@ -5,6 +5,7 @@
 import re
 from django.db import models
 from django.core.exceptions import ValidationError
+from rapidsms.webui import settings
 
 
 class Tag(models.Model):
@@ -15,12 +16,14 @@ class Tag(models.Model):
                   "string matching this regexp is assumed to be related to this " +
                   " tag. The CODE field is automatically prepended to this pattern.")
 
+
     def __unicode__(self):
         return self.title
 
     def __repr__(self):
         return '<%s: %s (%s)>' %\
             (type(self).__name__, self.title, self.code)
+
 
     def save(self, *args, **kwargs):
         """Verifies that the pattern field can be compiled into a valid regex
@@ -42,56 +45,58 @@ class Tag(models.Model):
         # all is well; save the object as usual
         models.Model.save(self, *args, **kwargs)
 
-    def _regex(self, whitespace=False):
+
+    @property
+    def _prefix(self):
+        return dict(settings.RAPIDSMS_APPS["tags"]).get("tag_prefix", "")
+
+    def _regex(self):
         """Returns a regular expression to check a string (probably an incoming
            message, but anything is fine) for this tag. Returns None if this
            object contains a pattern that cannot be compiled."""
 
+        pat = re.escape(self.code)
+
+        # if there is a custom pattern, append
+        # it to the code, to match alternatively
+        if self.pattern:
+            pat += "|(?:%s)" %\
+                (self.pattern)
+
         try:
-            pat = re.escape(self.code)
-
-            # if there is a custom pattern, append
-            # it to the code, to match alternatively
-            if self.pattern:
-                pat += "|(?:%s)" %\
-                    (self.pattern)
-
-            # optionally wrap the regex in whitespace, to easily
-            # crop a tag from a message without leaving gaps
-            ws = r"\s*" if whitespace else ""
-
             # build the regex
             return re.compile(
-                r"%s\b(%s)\b%s" % (ws, pat, ws),
+                r"(?:^|\s+)%s(%s)(?:$|\s+)" %\
+                    (self._prefix, pat),
                 re.IGNORECASE)
 
         # something went wrong. probably an invalid
         # regex, even though that shouldn't have been
         # allowed into the database in the first place
-        except:
+        except IOError:
             return None
+
 
     def match(self, text):
         """Attempts to match _text_ against this Tag (via Pattern._regex), to
            check if the string is "tagged" with it. Returns a SRE_Pattern if a
            match is found, otherwise None."""
 
-        r = self._regex()
-
         # if the regex was invalid, we're
         # definately not going to match
+        r = self._regex()
         if r is not None:
             return r.search(text)
+
 
     def crop(self, text):
         """Removes this Tag from _text_ (replacing it with a single space), and
            returns the new string. If the Tag is not found, returns _text_ as-is.
            This should be called after using self.match to check for the Tag."""
 
-        r = self._regex(whitespace=True)
-
         # if the regex was invalid, nothing will
         # be cropped, so return the string as-is
+        r = self._regex()
         if r is None:
             return text
 
