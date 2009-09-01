@@ -42,8 +42,7 @@ class Tag(models.Model):
         # all is well; save the object as usual
         models.Model.save(self, *args, **kwargs)
 
-    @property
-    def regex(self):
+    def _regex(self, whitespace=False):
         """Returns a regular expression to check a string (probably an incoming
            message, but anything is fine) for this tag. Returns None if this
            object contains a pattern that cannot be compiled."""
@@ -57,10 +56,47 @@ class Tag(models.Model):
                 pat += "|(?:%s)" %\
                     (self.pattern)
 
-            return re.compile(r"\b%s\b" % (pat), re.IGNORECASE)
+            # optionally wrap the regex in whitespace, to easily
+            # crop a tag from a message without leaving gaps
+            ws = r"\s*" if whitespace else ""
+
+            # build the regex
+            return re.compile(
+                r"%s\b(%s)\b%s" % (ws, pat, ws),
+                re.IGNORECASE)
 
         # something went wrong. probably an invalid
         # regex, even though that shouldn't have been
         # allowed into the database in the first place
         except:
             return None
+
+    def match(self, text):
+        """Attempts to match _text_ against this Tag (via Pattern._regex), to
+           check if the string is "tagged" with it. Returns a SRE_Pattern if a
+           match is found, otherwise None."""
+
+        r = self._regex()
+
+        # if the regex was invalid, we're
+        # definately not going to match
+        if r is not None:
+            return r.search(text)
+
+    def crop(self, text):
+        """Removes this Tag from _text_ (replacing it with a single space), and
+           returns the new string. If the Tag is not found, returns _text_ as-is.
+           This should be called after using self.match to check for the Tag."""
+
+        r = self._regex(whitespace=True)
+
+        # if the regex was invalid, nothing will
+        # be cropped, so return the string as-is
+        if r is None:
+            return text
+
+        # otherwise return the remainder of the string once self._regex
+        # is replaced with a space (to avoid joining the wrapping text),
+        # and stripped (to avoid leading or trailing spaces)
+        else:
+            return r.sub(" ", text).strip()
