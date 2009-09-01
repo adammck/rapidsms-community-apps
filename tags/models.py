@@ -17,6 +17,10 @@ class Tag(models.Model):
                   " tag. The CODE field is automatically prepended to this pattern.")
 
 
+    class Meta:
+        ordering = ["code"]
+
+
     def __unicode__(self):
         return self.title
 
