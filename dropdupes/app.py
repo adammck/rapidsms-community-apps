@@ -6,8 +6,7 @@ import hashlib
 import rapidsms
 
 
-class App(rapidsms.app.App):
-
+class App(rapidsms.App):
     def start(self):
         self.msg_log = []
 
@@ -29,7 +28,7 @@ class App(rapidsms.app.App):
         ).hexdigest()
 
         self.info("Message hash: %s", msg_hash)
-        
+
         # if we've already seen this message,
         # then return True to stop processing
         if msg_hash in self.msg_log:
@@ -40,7 +39,7 @@ class App(rapidsms.app.App):
 
         # add the new message hash to the log
         self.msg_log.append(msg_hash)
-        
+
         # if the log is too long, forget the oldest message,
         # to ensure that we're not dropping messages based
         # on things that arrived ages ago

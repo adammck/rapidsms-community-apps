@@ -8,7 +8,7 @@ from rapidsms.search import find_objects
 from utils import followable_models
 
 
-class App(rapidsms.app.App):
+class App(rapidsms.App):
     """This app provides a generic way for Reporters and PersistantConnections
        to "follow" events triggered by other models. The linking is performed
        by dynamically-generated models; This maintains foreign key consistancy
