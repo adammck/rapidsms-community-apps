@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # vim: ai ts=4 sts=4 et sw=4
 
+
 import rapidsms
 from rapidsms.message import StatusCodes
+
 
 class App(rapidsms.app.App):
     """When an incoming message is received, this application is notified
@@ -10,7 +12,7 @@ class App(rapidsms.app.App):
     
     PRIORITY = "lowest"
     
-    def handle(self, msg):
+    def catch(self, msg):
         if not msg.responses:
             
             # TODO: i18n from the reporters app
