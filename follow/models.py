@@ -16,7 +16,10 @@ for model in followable_models():
     f_name = "following_%s" % model.__name__.lower()
     r_name = "%s_set" % f_name
 
-    vars()[m_name] = type(m_name, (models.Model,), {
+    # dynamically build a django model in this scope, and link
+    # it back to the target via the __follow_model__ attribute,
+    # so it can be found later on via the original model
+    vars()[m_name] = model.__follow_model__ = type(m_name, (models.Model,), {
         f_name: models.ForeignKey(model, related_name="followers"),
 
         # allow reporters OR connections to follow other objects. this doesn't
