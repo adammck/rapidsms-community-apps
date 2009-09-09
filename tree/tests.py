@@ -2,7 +2,8 @@ from rapidsms.tests.scripted import TestScript
 from app import App
 import apps.reporters.app as reporters_app
 from models import *
-from apps.reporters.models import Reporter, PersistantConnection, PersistantBackend
+from apps.reporters.models import Reporter, PersistantConnection
+from apps.persistance.models import Backend as PersistantBackend
     
 class TestApp (TestScript):
     apps = (App, reporters_app.App)
