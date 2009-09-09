@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # vim: ai ts=4 sts=4 et sw=4
 
+from apps.reporters.models import Reporter
 
 import django
 
@@ -13,3 +14,10 @@ def followable_models():
     return filter(
         lambda o: getattr(o, "followable", False),
         django.db.models.loading.get_models())
+     
+
+
+
+
+
+
