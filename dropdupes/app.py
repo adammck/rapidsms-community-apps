@@ -10,7 +10,7 @@ class App(rapidsms.App):
     def start(self):
         self.msg_log = []
 
-    def configure(self, max_log_size=20):
+    def configure(self, max_log_size=20, **kwargs):
         self.max_log_size = max_log_size
 
     def filter(self, message):
