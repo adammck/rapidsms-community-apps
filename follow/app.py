@@ -4,8 +4,6 @@
 
 import re
 import rapidsms
-from rapidsms.search import find_objects
-from utils import followable_models
 
 
 class App(rapidsms.App):
@@ -59,41 +57,3 @@ class App(rapidsms.App):
 
            >>> adam.following_location_set.all()
            [<Location #1: New York City>]"""
-
-    FOLLOW_RE   = re.compile(r"^(?:follow|watch)\s*(.+)$", re.I)
-    UNFOLLOW_RE = re.compile(r"^un(?:follow|watch)\s*(.+)$", re.I)
-
-    def handle(self, msg):
-        match = self.FOLLOW_RE.match(msg.text)
-        if match is not None:
-
-            # fetch a list of objects (any model) that
-            # match the query via the __search__ api
-            to_follow = find_objects(
-                followable_models(),
-                match.group(1))
-
-            # link this reporter to the "followers" reverse foreign key
-            # of each object (whatever model it is -- they're all named
-            # "followers"). this works with unidentified connections too,
-            # even if that doesn't make much sense most of the time
-            for obj in to_follow:
-                obj.followers.get_or_create(**msg.persistance_dict)
-
-            if to_follow:
-                msg.respond(
-                    u"You are now following: %s" %
-                    (", ".join(map(unicode, to_follow))))
-
-            # if we didn't understand _any_ of what the
-            # caller asked us to follow, return an error
-            else:
-                msg.respond(u"Sorry, I couldn't understand what you want to follow")
-
-            return True
-
-        # is this an unfollow request?
-        pass
-
-        # is this a "who am i following?" request?
-        pass
