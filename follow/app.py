@@ -85,6 +85,11 @@ class App(rapidsms.App):
                     u"You are now following: %s" %
                     (", ".join(map(unicode, to_follow))))
 
+            # if we didn't understand _any_ of what the
+            # caller asked us to follow, return an error
+            else:
+                msg.respond(u"Sorry, I couldn't understand what you want to follow")
+
             return True
 
         # is this an unfollow request?

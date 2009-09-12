@@ -36,7 +36,7 @@ class Command(NoArgsCommand):
     # country > province > district > hospital > health centre > village
 
     def handle_noargs(self, **options):
-        #csv_reader = 
+        rows = list(self._csv("FosaListTable.txt"))
 
         # purge all locations
         # (just during dev)
@@ -45,7 +45,7 @@ class Command(NoArgsCommand):
         
         # first iteration: create all of the named provinces and
         # districts, to link back to the hospitals and health centres
-        for row in self._csv("FosaListTable.txt"):
+        for row in rows:
             
             # ensure that the province exists
             province = self.provinces.get(row[4], None)
