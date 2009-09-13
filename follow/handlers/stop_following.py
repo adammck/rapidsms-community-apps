@@ -2,7 +2,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 
 
-from handlers import KeywordHandler
+from rapidsms.contrib.apps.handlers import KeywordHandler
 from rapidsms.search import find_objects
 from follow.utils import followable_models
 
