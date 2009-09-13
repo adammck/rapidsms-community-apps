@@ -5,13 +5,13 @@
 import re
 import rapidsms
 from rapidsms.parsers import Matcher
-from apps.persistance.models import *
+from persistance.models import *
 from models import *
-from apps.locations.models import *
-from apps.tags.models import *
-from apps.people.models import *
-from apps.rwanda.models import *
-from apps.rwanda.utils import *
+from locations.models import *
+from tags.models import *
+from people.models import *
+from rwanda.models import *
+from rwanda.utils import *
 
 
 class App(rapidsms.App):

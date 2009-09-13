@@ -2,7 +2,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 
 from django.db import models
-from apps.people.models import *
+from people.models import *
 
 class Pregnant(Person):
     date_last_menses =   models.DateField("Date of Last menses", blank=True ,null=True)

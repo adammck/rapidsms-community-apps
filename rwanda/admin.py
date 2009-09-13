@@ -3,7 +3,7 @@
 
 
 from django.contrib import admin
-from apps.rwanda.models import *
+from rwanda.models import *
 
 
 admin.site.register(Child)

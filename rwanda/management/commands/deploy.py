@@ -4,7 +4,7 @@
 
 import os, csv, decimal
 from django.core.management.base import NoArgsCommand
-from apps.locations.models import *
+from locations.models import *
 
 
 SOURCES_DIR = os.path.abspath("apps/rwanda/sources")

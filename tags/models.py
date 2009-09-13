@@ -5,7 +5,7 @@
 import re
 from django.db import models
 from django.core.exceptions import ValidationError
-from rapidsms.webui import settings
+from rapidsms.djangoproject import settings
 
 
 class Tag(models.Model):

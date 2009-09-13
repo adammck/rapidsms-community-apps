@@ -6,21 +6,21 @@ from django.views.decorators.http import require_GET, require_http_methods
 from django.shortcuts import get_object_or_404
 from django.db import transaction
 
-from rapidsms.webui import settings
-from rapidsms.webui.utils import *
-from apps.follow.models import *
-from apps.follow.utils import *
-from apps.reporters.utils import *
-from apps.follow.models import *
-from apps.locations.models import Location
-from apps.reporters.models import *
+from rapidsms.djangoproject import settings
+from rapidsms.djangoproject.utils import *
+from follow.models import *
+from follow.utils import *
+from reporters.utils import *
+from follow.models import *
+from locations.models import Location
+from reporters.models import *
 
 
 # likewise, is the logger app running? we'll
 # add a mini message log just for this reporter
 use_logger = ("logger" in settings.RAPIDSMS_APPS)
 if use_logger:
-    from apps.logger.models import *
+    from logger.models import *
 
 #>>> for model in followable_models():
 #...     model.__follow_model__

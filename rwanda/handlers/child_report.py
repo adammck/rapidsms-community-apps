@@ -2,9 +2,9 @@
 # vim: ai ts=4 sts=4 et sw=4
 
 
-from apps.handlers import KeywordHandler
+from handlers import KeywordHandler
 from rapidsms.search import find_objects
-from apps.reporting.utils import get_weight
+from reporting.utils import get_weight
 
 
 class ChildReport(KeywordHandler):
