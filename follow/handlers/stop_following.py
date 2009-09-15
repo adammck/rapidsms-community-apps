@@ -3,7 +3,7 @@
 
 
 from rapidsms.contrib.apps.handlers import KeywordHandler
-from rapidsms.search import find_objects
+from rapidsms.contrib.apps.search.utils import find_objects
 from follow.utils import followable_models
 
 
@@ -16,8 +16,7 @@ class UnFollowHandler(KeywordHandler):
     def handle(self, text):
 
         to_unfollow = find_objects(
-            followable_models(),
-            text)
+            text, followable_models())
 
         for obj in to_unfollow:
             try:
@@ -28,7 +27,7 @@ class UnFollowHandler(KeywordHandler):
 
         if to_unfollow:
             self.respond(
-                "You are no longer following: %s" %
+                "You are no longer following: %s." %
                 (", ".join(map(unicode, to_unfollow))))
 
         else:

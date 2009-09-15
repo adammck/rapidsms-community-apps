@@ -4,7 +4,7 @@
 
 import re
 import rapidsms
-from rapidsms.search import find_objects
+from rapidsms.contrib.apps.search.utils import find_objects
 from utils import followable_models
 
 

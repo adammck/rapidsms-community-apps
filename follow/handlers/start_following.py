@@ -3,7 +3,7 @@
 
 
 from rapidsms.contrib.apps.handlers import KeywordHandler
-from rapidsms.search import find_objects
+from rapidsms.contrib.apps.search.utils import find_objects
 from follow.utils import followable_models
 
 
@@ -18,8 +18,7 @@ class FollowHandler(KeywordHandler):
         # fetch a list of objects (any model) that
         # match the query via the __search__ api
         to_follow = find_objects(
-            followable_models(),
-            text)
+            text, followable_models())
 
         # link this reporter to the "followers" reverse foreign key
         # of each object (whatever model it is -- they're all named
@@ -31,7 +30,7 @@ class FollowHandler(KeywordHandler):
 
         if to_follow:
             self.respond(
-                "You are now following: %s" %
+                "You are now following: %s." %
                 (", ".join(map(unicode, to_follow))))
 
         # if we didn't understand _any_ of what the
