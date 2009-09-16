@@ -3,16 +3,21 @@
 
 
 import rapidsms
-from rapidsms.message import StatusCodes
+from rapidsms.messages import ErrorMessage
 
 
 class App(rapidsms.App):
-    """When an incoming message is received, send a
-       default response if case no other App responded."""
+    """
+    This app catches incoming messages which are not responded to by any other
+    app, and sends a default response. This should be avoided where possible,
+    since the default is necessarily very vague.
+    """
 
     def catch(self, msg):
         if not msg.responses:
+
             msg.respond(
                 "Sorry, we didn't understand that message.",
-                StatusCodes.GENERIC_ERROR)
+                cls=ErrorMessage)
+
             return True
