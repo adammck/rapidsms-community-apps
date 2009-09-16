@@ -3,7 +3,6 @@
 
 
 import rapidsms
-from rapidsms.messages import ErrorMessage
 
 
 class App(rapidsms.App):
@@ -16,8 +15,8 @@ class App(rapidsms.App):
     def catch(self, msg):
         if not msg.responses:
 
-            msg.respond(
-                "Sorry, we didn't understand that message.",
-                cls=ErrorMessage)
+            msg.error(
+                "Sorry, RapidSMS didn't understand that. You said: %(you_said)s",
+                you_said=msg.text)
 
             return True
