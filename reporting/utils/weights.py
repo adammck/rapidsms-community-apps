@@ -33,47 +33,55 @@ MULTIPLIERS = {
 }
 
 
-FLOAT_PATTERN = r"\d+(?:\.\d+)?"
+FLOAT_PATTERN = r"\d+(?:[.,]\d+)?"
 UNIT_PATTERN = "|".join(UNIT_PATTERNS.values())
 REGEX = re.compile(
-    r"%s(%s)\s*(%s)%s" %\
+    r"%s#?(%s)\s*(%s)%s" %\
         (DELIMITER, FLOAT_PATTERN,
         UNIT_PATTERN, DELIMITER),
     re.I)
 
 
-def get_weight(text):
+def extract_weight(text):
     """
         Attempts to extract a string that looks like a weight from *text*, and
         returns a tuple containing the weight in kilograms (a float), and the
         remainder of *text*. Many formats are supported:
 
-          >>> get_weight("10kg")
+          >>> extract_weight("10kg")
           (10.0, '')
 
-          >>> get_weight("15 kilos")
+          >>> extract_weight("15 kilos")
           (15.0, '')
 
-          >>> get_weight("20 kilogrammes")
+          >>> extract_weight("20,0 kilogrammes")
           (20.0, '')
 
         Also, many units are supported. The output is always converted into
         kilograms before being returned, making this function unit-agnostic:
 
-          >>> get_weight("25lb")
+          >>> extract_weight("25lb")
           (11.33980925, '')
 
-          >>> get_weight("30 stones")
+          >>> extract_weight("30 stones")
           (190.50879540000003, '')
 
         Since the remainder is returned, this function can be used to extract
         weights from arbitrary strings quite easily (like tags.models.Tag):
 
-          >>> get_weight("xx 40 pounds yy")
+          >>> extract_weight("xx 40 pounds yy")
           (18.143694800000002, 'xx yy')
 
-          >>> get_weight("REPORT ON #1234. Weight 45kg, Height 100cm")
+          >>> extract_weight("REPORT ON #1234. Weight 45kg, Height 100cm")
           (45.0, 'REPORT ON #1234. Weight Height 100cm')
+
+        Surrounding junk is ignored.
+
+          >>> extract_weight("#50kg ")
+          (50.0, '')
+
+          >>> extract_weight("Blah blah B0 55.5kg blah")
+          (55.5, 'Blah blah B0 blah')
     """
 
     m = re.search(REGEX, text)
@@ -94,7 +102,7 @@ def get_weight(text):
         if re.match(pattern, unit_str, re.I):
 
             # convert the result to kilos
-            kg = float(num_str) * MULTIPLIERS[unit]
+            kg = float(num_str.replace(",", ".")) * MULTIPLIERS[unit]
             return (kg, remainder)
 
 
