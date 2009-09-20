@@ -3,8 +3,11 @@
 
 
 from django.db import models
+from tags.models import Tag
 
 
 class Report(models.Model):
+    tags = models.ManyToManyField(Tag, blank=True)
+    
     class Meta:
         pass

@@ -43,8 +43,8 @@ class Person(models.Model):
     # (eg, if a linked reporter makes a report on "adam",
     # or "1", we can take a guess at who they mean without
     # requiring a GUID for every child)
-    location = models.ManyToManyField(Location, related_name="people", blank=True)
-    reporter = models.ManyToManyField(Reporter, related_name="people", blank=True)
+    locations = models.ManyToManyField(Location, related_name="people", blank=True)
+    reporters = models.ManyToManyField(Reporter, related_name="people", blank=True)
 
     # this field is deliberately dumb, to avoid the
     # unsolvable problem of parsing human names into
@@ -63,7 +63,7 @@ class Person(models.Model):
 
     # ...actually, yes there is.
     # YAGNI. aren't you guys proud?
-    type = models.ForeignKey(PersonType)
+    type = models.ForeignKey(PersonType, null=True, blank=True)
 
 
     # and now, back to our regularly-scheduled
@@ -85,7 +85,7 @@ class Person(models.Model):
         pass
 
     def __unicode__(self):
-        return self.name
+        return self.name or self.code
 
     def __repr__(self):
         return "<Person #%r>" % (

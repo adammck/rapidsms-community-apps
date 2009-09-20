@@ -15,6 +15,21 @@ from rwanda.utils import *
 
 
 class App(rapidsms.App):
+    def parse(self, msg):
+        msg.text = msg.text.replace(".", " ")
+
+    def handle(self, msg):
+        if msg.text.strip() == "":
+            msg.error("Your message was empty. You must enter some text.")
+            return True
+
+    def catch(self, msg):
+        if not msg.responses:
+            msg.error("Sorry, we could not understand that message.")
+            return True
+
+
+class Appx(object):
     MSG = {
         "en": {
             "bad-alias":   "Sorry, I don't know anyone by that name.",

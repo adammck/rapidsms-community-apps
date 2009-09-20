@@ -1,0 +1,76 @@
+{% extends "feedback/index.html" %}
+
+{% block title %}{% if trigger %}Edit {{ trigger }}{% else %}Add a Feedback Loop{% endif %}{% endblock %}
+
+{% block right %}
+<div class="module">
+	<h2>{% if tag %}Edit {{ trigger }}{% else %}Add a Feedback Loop{% endif %}</h2>
+
+	<form method="post" action="/feedback/{% if trigger %}{{ trigger.pk }}{% else %}add{% endif %}">
+		<!--<div>
+			<label for="fm-trig-title">Title</label>
+			<input type="text" class="required" id="fm-trig-title" name="trigger"{% if trigger %} value="{{ trigger.title }}"{% endif %} />
+			<p class="help">Optional.</p>
+		</div>-->
+		<div class="split">
+			<div class="left">
+				<label>Required Tags</label>
+				<div class="all-tags">{% for tag in all_tags %}
+					<div>
+						<input type="checkbox" />
+						<span class="code"><span>{{ tag.code }}</span></span>
+						<span class="title">{{ tag.title }}</span>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			<script type="text/javascript">
+				$(function() {
+
+					$(".all-tags > div").click(function() {
+						$(this).toggleClass("selected");
+					});
+				});
+			</script>
+			<div class="right">
+				<label>Forbidden Tags</label>
+				<div class="all-tags">{% for tag in all_tags %}
+					<div>
+						<input type="checkbox" />
+						<span class="code"><span>{{ tag.code }}</span></span>
+						<span class="title">{{ tag.title }}</span>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="clear-hack"></div>
+		</div>
+
+		<div>
+			<label>Recipient</label>
+			<div>
+				<select name="conn-backend">
+					<option>Only the Reporter</option>
+					<option>The Reporter's Location</option>
+					<option>The Reporter's Group</option>
+				</select>
+				<p class="help">The recipient of this feedback.</p>
+			</div>
+		</div>
+
+		<div>
+			<label>Feedback</label>
+			<textarea class="required" name="text" cols="40" rows="4"></textarea>
+			<p class="help">
+				The message that is sent to the <em>Recipient</em>
+				when this feedback loop is triggered.
+			</p>
+		</div>
+
+		<div class="submit">
+			<input type="submit" value="{% if trigger %}Save Changes{% else %}Add Feedback Loop{% endif %}" />{% if trigger %}
+			<input type="submit" name="delete" value="Delete {{ trigger }}" />{% endif %}
+		</div>
+	</form>
+</div>
+{% endblock %}

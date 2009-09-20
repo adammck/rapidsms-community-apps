@@ -6,6 +6,9 @@ from django.contrib import admin
 from rwanda.models import *
 
 
-admin.site.register(Child)
-admin.site.register(Pregnant)
+admin.site.register(PregnantPerson)
+admin.site.register(PregnancyReport)
+admin.site.register(PreBirthReport)
+admin.site.register(BirthReport)
+admin.site.register(ChildReport)
 #admin.site.register(PersistantConnection)
