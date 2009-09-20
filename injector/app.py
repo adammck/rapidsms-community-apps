@@ -17,7 +17,7 @@ class App(rapidsms.App):
        inject <BACKEND> <IDENTITY> <TEXT>"""
 
     prefix  = re.compile(r'^inject(?:\s+(.+))?$', re.I)
-    pattern = re.compile(r'^\s*(\S+?)\s+(\S+?)\s+(.+)$', re.I)
+    pattern = re.compile(r'^\s*([a-z0-9]+?)[:\s+](\S+?)\s+(.+)$', re.I)
 
     def handle(self, msg):
 
