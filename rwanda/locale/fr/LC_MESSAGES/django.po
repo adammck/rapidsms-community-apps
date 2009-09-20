@@ -11,10 +11,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 
-msgid "Sorry, we could not understand that message."
-msgstr "Desole, nous n’avons pas compris ce message."
-
-
 msgid "Your message was empty. You must enter some text."
 msgstr ""
 

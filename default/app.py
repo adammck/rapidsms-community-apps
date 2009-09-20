@@ -2,10 +2,10 @@
 # vim: ai ts=4 sts=4 et sw=4
 
 
-import rapidsms
+from rapidsms import App
 
 
-class App(rapidsms.App):
+class DefaultApp(App):
     """
     This app catches incoming messages which are not responded to by any other
     app, and sends a default response. This should be avoided where possible,
@@ -14,10 +14,5 @@ class App(rapidsms.App):
 
     def catch(self, msg):
         if not msg.responses:
-
             msg.error("Sorry, we could not understand that message.")
-            #msg.error(
-            #    "Sorry, RapidSMS didn't understand that. You said: %(you_said)s",
-            #    you_said=msg.text)
-
             return True

@@ -3,13 +3,13 @@
 
 
 from rapidsms.tests.scripted import TestScript
-from app import App
+from app import DefaultApp
 
 
 class TestApp (TestScript):
-    apps = (App,)
+    apps = (DefaultApp,)
 
     testDefaultResponse = """
         1 > LOL
-        1 < Sorry, RapidSMS didn't understand that. You said: LOL
+        1 < Sorry, we could not understand that message.
     """
