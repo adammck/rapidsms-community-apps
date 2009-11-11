@@ -3,7 +3,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 
 from rapidsms.tests.scripted import TestScript
-from rapidsms.contrib.apps.handlers.app import App as HandlerApp
+from rapidsms.contrib.handlers.app import App as HandlerApp
 from reporters.app import App as ReportersApp
 from messaging.app import App as MessagingApp
 from tags.app import App as TagsApp

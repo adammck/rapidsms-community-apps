@@ -4,7 +4,7 @@
 
 import re
 from reporting.utils import extract_date
-from rapidsms.contrib.apps.handlers import KeywordHandler
+from rapidsms.contrib.handlers import KeywordHandler
 from rwanda.models import PregnantPerson, PreBirthReport
 
 

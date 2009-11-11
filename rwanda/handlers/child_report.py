@@ -3,7 +3,7 @@
 
 
 from reporting.utils import extract_weight, extract_length
-from rapidsms.contrib.apps.handlers import KeywordHandler
+from rapidsms.contrib.handlers import KeywordHandler
 from rwanda.models import PregnantPerson, BirthReport, ChildReport
 
 
