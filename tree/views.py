@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 
-from apps.tree.models import *
+from models import *
 
 from StringIO import StringIO
 import csv

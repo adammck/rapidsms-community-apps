@@ -1,0 +1,57 @@
+{% extends "layout-split-2.html" %}
+{% block title %}{{ app_conf.title }}{% endblock %}
+{% load pagination %}
+
+{% block stylesheets %}
+<link type="text/css" rel="stylesheet" href="/static/feedback/stylesheets/feedback.css" />
+{% endblock %}
+
+{% block left %}
+<div class="module">
+	<h2>All Feedback Loops</h2>
+	<table>
+		<thead>
+			<tr>
+				<th scope="col"></th>
+				<th scope="col">Response(s)</th>
+			</tr>
+		</thead>
+		<tbody>{% if triggers.object_list %}{% for trigger in triggers.object_list %}
+			<tr>
+
+				<td><a href="/feedback/{{ trigger.pk }}">{{ trigger }}</a></td>
+				<td>{{ trigger.response_summary }}</td>
+
+			</tr>{% endfor %}{% else %}
+			<tr class="no-data">
+				<td colspan="2">
+					No feedback loops are defined yet.
+					<a href="/feedback/add" class="add">
+						Add a Feedback Loop
+					</a>
+				</td>
+			</tr>{% endif %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="2">
+				{% paginator triggers %}
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+	<div class="toolbar">
+		<a href="/feedback/add" class="add">Add a Feedback Loop</a>
+	</div>
+</div>
+{% endblock %}
+
+{% block right %}
+<div class="module placeholder">
+	<h2>&nbsp;</h2>
+	<p>
+		Click a Feedback loop to edit it, or
+		<a href="/feedback/add">Add a Feedback Loop</a>
+	</p>
+</div>
+{% endblock %}

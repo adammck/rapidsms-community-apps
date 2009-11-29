@@ -1,0 +1,73 @@
+/* UNICEF RapidSMS UI
+ * vim:set noet:
+ * --
+ * reporters.css
+ * --
+ * What is this? */
+
+
+/* index */
+
+.module.placeholder {
+	
+}
+
+
+/* add/edit form */
+
+.all-tags {
+	max-height: 14em;
+	border: 1px solid #ddd;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+	.all-tags > div {
+		width: 500px;
+		clear: both;
+		cursor: pointer;
+		border-top: 1px solid #eee;
+		color: #aaa;
+	}
+
+		.all-tags > div:first-child {
+			border-top: 0; }
+
+		/* hide the real check box */
+		.all-tags > div input {
+			display: none;
+		}
+
+		.all-tags > div > .code {
+			border-right: 1px solid #ddd;
+			text-transform: uppercase;
+			background: #eee url("/static/webui/icons/silk/accept--dull.png") no-repeat 0.5em 50%;
+			padding: 0.5em;
+			display: block;
+			float: left;
+			font-weight: bold;
+			font-family: monospace;
+		}
+
+
+			.all-tags > div > .code > span {
+				margin-left: 16px;
+				padding-left: 0.5em;
+			}
+
+		.all-tags > div > .title {
+			display: block;
+			float: left;
+			font-size: 80%;
+			padding: 0.625em;
+			line-height: 1.25em;
+		}
+
+
+			.all-tags > div.selected {
+				color: #000;
+			}
+
+				.all-tags > div.selected .code {
+					background-image: url("/static/webui/icons/silk/accept.png");
+				}

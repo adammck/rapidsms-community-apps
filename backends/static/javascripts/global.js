@@ -43,9 +43,7 @@ jQuery(function() {
 			var signal = status["_signal"];
 			if(signal == null) signal = "unknown";
 
-			/* update the class (to update the icon) and
-			 * add a tooltip with the new signal strength */
-			span.attr("title", "Signal Strength for " + status["_title"] + ": " + signal);
+			/* update the class (to update the icon) */
 			span.attr("class", "signal s-" + signal);
 
 			/* insert the full status into the
@@ -66,9 +64,6 @@ jQuery(function() {
 				span.html("");
 			}
 		});
-
-		var num = jQuery("span.signal", container).size();
-		container.attr("class", "backends-" + num);
 	}
 
 

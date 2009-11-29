@@ -3,8 +3,8 @@
 
 
 from django.db import models
-from apps.reporters.models import Reporter
-from apps.locations.models import Location
+from reporters.models import Reporter
+from locations.models import Location
 
 
 class PersonType(models.Model):
@@ -43,8 +43,8 @@ class Person(models.Model):
     # (eg, if a linked reporter makes a report on "adam",
     # or "1", we can take a guess at who they mean without
     # requiring a GUID for every child)
-    location = models.ManyToManyField(Location, related_name="people", blank=True)
-    reporter = models.ManyToManyField(Reporter, related_name="people", blank=True)
+    locations = models.ManyToManyField(Location, related_name="people", blank=True)
+    reporters = models.ManyToManyField(Reporter, related_name="people", blank=True)
 
     # this field is deliberately dumb, to avoid the
     # unsolvable problem of parsing human names into
@@ -63,7 +63,7 @@ class Person(models.Model):
 
     # ...actually, yes there is.
     # YAGNI. aren't you guys proud?
-    type = models.ForeignKey(PersonType)
+    type = models.ForeignKey(PersonType, null=True, blank=True)
 
 
     # and now, back to our regularly-scheduled
@@ -74,7 +74,7 @@ class Person(models.Model):
     # feel free to add things here, but ONLY immutable
     # values. things like _height_ and _weight_ change
     # over time, so should be linked via a ForeignKey
-    date_of_birth = models.DateField("Date of Birth", blank=True)
+    date_of_birth = models.DateField("Date of Birth",  blank=True, null=True)
     gender        = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
 
 
@@ -85,7 +85,7 @@ class Person(models.Model):
         pass
 
     def __unicode__(self):
-        return self.name
+        return self.name or self.code
 
     def __repr__(self):
         return "<Person #%r>" % (

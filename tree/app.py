@@ -3,7 +3,7 @@
 
 import rapidsms
 from models import *
-from apps.reporters.models import Reporter
+from reporters.models import Reporter
 from i18n import get_translation as _
 from i18n import get_language 
 
