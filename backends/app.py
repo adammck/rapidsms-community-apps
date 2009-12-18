@@ -6,8 +6,6 @@ import rapidsms
 
 
 class App(rapidsms.App):
-    _slug = "backends"
-
     def ajax_GET_status(self, params):
         return dict([
             (be.slug, be.status())

@@ -1,16 +1,13 @@
-/* Name and/or Title
- * vim:set noet:
- * --
- * Two or three lines of purpose and/or
- * justification for the existence of this */
-
-
 /* shrink the rapidsms logo enough to hide the cellphone,
  * since we're going to replace it with javascript */
 #branding h1 a {
 	width: 210px;
 }
 
+
+/* each backend is represented as a separate cellphone,
+ * in place of the single cellphone usually at the right
+ * of the rapidsms logo */
 #branding span.signal {
 	background-repeat: no-repeat;
 	background-position: 0 50%;
@@ -21,14 +18,13 @@
 	float: left;
 }
 
-
-/* set the cellphone icon for each signal strength */
-#branding span.signal.s-unknown { background-image: url("../images/rapidsms-cellphone-unknown.png"); }
-#branding span.signal.s-0 { background-image: url("../images/rapidsms-cellphone-0.png"); }
-#branding span.signal.s-1 { background-image: url("../images/rapidsms-cellphone-1.png"); }
-#branding span.signal.s-2 { background-image: url("../images/rapidsms-cellphone-2.png"); }
-#branding span.signal.s-3 { background-image: url("../images/rapidsms-cellphone-3.png"); }
-#branding span.signal.s-4 { background-image: url("../images/rapidsms-cellphone-4.png"); }
+	/* set the cellphone icon for each signal strength */
+	#branding span.signal.s-unknown { background-image: url("../images/rapidsms-cellphone-unknown.png"); }
+	#branding span.signal.s-0       { background-image: url("../images/rapidsms-cellphone-0.png"); }
+	#branding span.signal.s-1       { background-image: url("../images/rapidsms-cellphone-1.png"); }
+	#branding span.signal.s-2       { background-image: url("../images/rapidsms-cellphone-2.png"); }
+	#branding span.signal.s-3       { background-image: url("../images/rapidsms-cellphone-3.png"); }
+	#branding span.signal.s-4       { background-image: url("../images/rapidsms-cellphone-4.png"); }
 
 
 /* each icon (one for each backend) contains
